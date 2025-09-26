@@ -6,9 +6,38 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+let nodemailer = null;
 
 // Load environment variables from .env if present
 try { require('dotenv').config(); } catch (_) {}
+
+// Lazy-load nodemailer only if available; this file may run in environments without mail
+try { nodemailer = require('nodemailer'); } catch (_) { nodemailer = null; }
+
+// Build and cache a transporter from environment variables if possible
+let __mailTransporter = null;
+function getTransporter() {
+  if (__mailTransporter !== null) return __mailTransporter; // cached (can be null)
+  try {
+    if (!nodemailer) { __mailTransporter = null; return null; }
+    const host = process.env.SMTP_HOST;
+    const port = parseInt(process.env.SMTP_PORT || '587', 10);
+    const secure = String(process.env.SMTP_SECURE || '').toLowerCase() === 'true' || port === 465;
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    if (!host || !user || !pass) { __mailTransporter = null; return null; }
+    __mailTransporter = nodemailer.createTransport({ host, port, secure, auth: { user, pass } });
+    // Verify once (non-fatal)
+    __mailTransporter.verify().then(() => {
+      try { console.log('[mail] SMTP connection verified for', user, 'via', host + ':' + port, 'secure=', secure); } catch(_) {}
+    }).catch(err => {
+      try { console.error('[mail] SMTP verify failed:', err && err.message ? err.message : err); } catch(_) {}
+    });
+    return __mailTransporter;
+  } catch (e) {
+    __mailTransporter = null; return null;
+  }
+}
 
 function loadContact() {
   try {
@@ -235,9 +264,57 @@ app.post('/api/leads', (req, res) => {
     };
     const saved = saveLead(entry);
     if (!saved) return res.status(500).json({ error: 'Failed to save lead' });
+    // Fire-and-forget email to sales inbox if SMTP is configured
+    try {
+      const t = getTransporter();
+      const to = (process.env.MAIL_TO || '').trim();
+      if (t && to) {
+        const subject = `[Lead] ${firstName} ${lastName}${city || state ? `  from ${city || ''}${state ? (city ? ', ' : '') + state : ''}` : ''}`;
+        const html = `
+          <h2>New Lead</h2>
+          <ul>
+            <li><strong>Name</strong>: ${firstName} ${lastName}</li>
+            <li><strong>Phone</strong>: ${phone || '(none)'} </li>
+            <li><strong>Email</strong>: ${email || '(none)'} </li>
+            <li><strong>ZIP</strong>: ${zip || ''}</li>
+            <li><strong>City</strong>: ${city || ''}</li>
+            <li><strong>State</strong>: ${state || ''}</li>
+            <li><strong>Source</strong>: ${source || ''}</li>
+            <li><strong>User-Agent</strong>: ${entry.userAgent || ''}</li>
+            <li><strong>IP</strong>: ${entry.ip || ''}</li>
+            <li><strong>Created</strong>: ${entry.createdAt}</li>
+          </ul>
+          <p><strong>Message</strong>:</p>
+          <pre style="white-space:pre-wrap">${message || ''}</pre>
+        `;
+        const fromHdr = (process.env.MAIL_FROM && process.env.MAIL_FROM.trim()) || (process.env.SMTP_USER ? `Inspector Wiz <${process.env.SMTP_USER}>`  : `Inspector Wiz <no-reply@inspectorwiz.com>`);
+        t.sendMail({ from: fromHdr, to, subject, html })
+          .then(info => { try { console.log('[mail] sent lead email:', { to, messageId: info && info.messageId }); } catch(_) {} })
+          .catch(err => { try { console.error('[mail] send failed:', err && err.message ? err.message : err); } catch(_) {} });
+      } else {
+        console.warn('[mail] no transporter or MAIL_TO missing. Email not sent.', { hasNodemailer: !!nodemailer, hasTransporter: !!t, hasTo: !!to });
+      }
+    } catch (_) {}
     return res.json({ ok: true });
   } catch (e) {
     return res.status(500).json({ error: 'Exception while saving lead' });
+  }
+});
+
+// SMTP test endpoint to verify email configuration without creating a lead
+app.post('/api/util/test-mail', (req, res) => {
+  try {
+    const t = getTransporter();
+    const to = (process.env.MAIL_TO || '').trim();
+    if (!t) return res.status(500).json({ ok: false, error: 'No SMTP transporter. Install nodemailer and configure SMTP env vars.' });
+    if (!to) return res.status(400).json({ ok: false, error: 'MAIL_TO not set' });
+    const now = new Date().toISOString();
+    const fromHdr = (process.env.MAIL_FROM && process.env.MAIL_FROM.trim()) || (process.env.SMTP_USER ? `Inspector Wiz <${process.env.SMTP_USER}>`  : `Inspector Wiz <no-reply@inspectorwiz.com>`);
+    return t.sendMail({ from: fromHdr, to, subject: `[Test] Inspector Wiz SMTP test @ ${now}` , html: `<p>This is a test email sent at ${now}.</p>` })
+      .then(info => res.json({ ok: true, to, messageId: info && info.messageId }))
+      .catch(err => res.status(500).json({ ok: false, error: err && err.message ? err.message : String(err) }));
+  } catch (e) {
+    return res.status(500).json({ ok: false, error: 'Exception while sending test email' });
   }
 });
 

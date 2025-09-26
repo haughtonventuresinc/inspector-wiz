@@ -6,8 +6,8 @@
 	<style>
 		/* Brand palette */
 		:root {
-			--brand-blue: #0B5E8E;   /* primary deep blue */
-			--brand-lime: #F9EE28;   /* logo yellow (warmer) */
+			--brand-blue: #54A1DA;   /* Background Blue */
+			--brand-lime: #F6C52A;   /* Brand Yellow */
 			/* Map legacy tokens used across templates */
 			--brand-red: var(--brand-blue);
 			--brand-yellow: var(--brand-lime);
@@ -43,17 +43,17 @@
 	<!-- Late brand override to ensure palette wins over bundled CSS -->
 	<style>
 		:root { 
-			--brand-blue: #0B5E8E !important; 
-			--brand-lime: #F9EE28 !important; 
+			--brand-blue: #54A1DA !important; 
+			--brand-lime: #F6C52A !important; 
 			--brand-red: var(--brand-blue) !important; 
 			--brand-yellow: var(--brand-lime) !important; 
 		}
 		/* Header banner and navbar */
-		.banner-wrapper { background-color: var(--brand-blue) !important; }
-		#header.navbar { background-color: var(--brand-lime) !important; border-bottom: 3px solid var(--brand-blue) !important; }
-		#header .nav-link { color: var(--brand-blue) !important; }
-		#header .nav-link:hover { color: #063e61 !important; }
-		#header .dropdown-item:hover { background: var(--brand-lime) !important; color: #052B44 !important; }
+		.banner-wrapper { background-color: #14395E !important; }
+		#header.navbar { background-color: var(--brand-blue) !important; border-bottom: 3px solid var(--brand-blue) !important; }
+		#header .nav-link { color: #14395E !important; }
+		#header .nav-link:hover { color: #14395E !important; text-decoration: underline; }
+		#header .dropdown-item:hover { background: var(--brand-lime) !important; color: #14395E !important; }
 
 		/* Global component overrides */
 		.btn-primary, .btn-brand-primary { background-color: var(--brand-blue) !important; border-color: var(--brand-blue) !important; color: #fff !important; }
@@ -76,7 +76,7 @@
 	<meta name="msapplication-TileImage" content="/pictures/favicon/inspector-wiz/favicon-192x192.png" />
 	<style>
 		/* Global top banner styles */
-		.banner-wrapper { background-color: var(--brand-red); }
+		.banner-wrapper { background-color: #14395E; }
 		.banner-wrapper .banner-header { 
 			margin: 0; 
 			text-align: center; 
@@ -84,10 +84,11 @@
 			font-weight: 700; 
 			letter-spacing: .02em;
 			padding: 8px 0;
+			color: var(--brand-blue);
 		}
 		.banner-wrapper .banner-header a { 
 			background: transparent;
-			color: var(--brand-lime) !important; 
+			color: var(--brand-blue) !important; 
 			text-decoration: none; 
 			display: inline-block; 
 			padding: 4px 10px;
@@ -107,11 +108,11 @@
 		}
 
 		/* Brand theming for navbar */
-		#header.navbar { background-color: var(--brand-lime) !important; border-bottom: 3px solid var(--brand-blue) !important; }
-		#header .nav-link { color: var(--brand-blue) !important; font-weight: 600; }
-		#header .nav-link:hover, #header .nav-link:focus { color: #063e61 !important; }
+		#header.navbar { background-color: var(--brand-blue) !important; border-bottom: 3px solid var(--brand-blue) !important; }
+		#header .nav-link { color: #14395E !important; font-weight: 600; }
+		#header .nav-link:hover, #header .nav-link:focus { color: #14395E !important; text-decoration: underline; }
 		#header .dropdown-menu { border-radius: 10px; border-color: rgba(11,94,142,.15); }
-		#header .dropdown-item:hover, #header .dropdown-item:focus { background: var(--brand-yellow); color: #052B44; }
+		#header .dropdown-item:hover, #header .dropdown-item:focus { background: var(--brand-lime); color: #14395E; }
 
 		/* Primary buttons in header context */
 		.btn.btn-brand-primary { background-color: var(--brand-red) !important; border-color: var(--brand-red) !important; color: #fff; }

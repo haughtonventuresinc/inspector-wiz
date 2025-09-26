@@ -336,6 +336,58 @@
   <script>
     (function(){
       try {
+        function serializeForm(form){
+          var fd = new FormData(form);
+          var obj = {};
+          fd.forEach(function(v, k){ obj[k] = v; });
+          return obj;
+        }
+        function postJSON(url, data){
+          return fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          }).then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, body: j }; }); });
+        }
+        function wireAjaxSubmit(formId, statusId){
+          var form = document.getElementById(formId);
+          var statusEl = document.getElementById(statusId);
+          if (!form) return;
+          form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (form.checkValidity && !form.checkValidity()) {
+              try { form.reportValidity(); } catch(_) {}
+              return;
+            }
+            var btn = form.querySelector('button[type="submit"]');
+            var data = serializeForm(form);
+            if (statusEl) { statusEl.textContent = 'Sending…'; statusEl.style.color = '#fff'; }
+            if (btn) { btn.disabled = true; btn.setAttribute('aria-disabled', 'true'); }
+            postJSON('/api/leads', data).then(function(res){
+              if (res.ok && res.body && res.body.ok){
+                if (statusEl) { statusEl.textContent = 'Thanks! Your request was sent successfully.'; statusEl.style.color = '#F4D130'; }
+                try { form.reset(); } catch(_) {}
+              } else {
+                var msg = (res.body && (res.body.error || res.body.message)) || 'Submission failed.';
+                if (statusEl) { statusEl.textContent = msg; statusEl.style.color = '#ffdddd'; }
+              }
+            }).catch(function(){
+              if (statusEl) { statusEl.textContent = 'Network error. Please try again.'; statusEl.style.color = '#ffdddd'; }
+            }).finally(function(){
+              if (btn) { btn.disabled = false; btn.removeAttribute('aria-disabled'); }
+            });
+          });
+        }
+        wireAjaxSubmit('contactForm1', 'contactForm1Status');
+        wireAjaxSubmit('contactForm2', 'contactForm2Status');
+      } catch(_) {}
+    })();
+  </script>
+
+  <script>
+    (function(){
+      try {
         function wireValidation(formId){
           var form = document.getElementById(formId);
           if (!form) return;

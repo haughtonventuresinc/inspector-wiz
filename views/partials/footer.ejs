@@ -1,32 +1,42 @@
 </main>
-        <footer id="footer" class="footer">
+        <footer id="footer" class="footer" style="color:#14395E; -webkit-text-fill-color:#14395E;">
             <style>
-              /* Footer brand theme: logo yellow background, deep blue text */
-              .footer, .footer * { box-sizing: border-box; }
-              .footer { background: var(--brand-lime); border-top: 4px solid var(--brand-blue); }
-              .footer .links-wrapper, .footer .branding-wrapper { color: var(--brand-blue); }
-              .footer .widget-title,
-              .footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6 { color: var(--brand-blue) !important; }
-              .footer p, .footer li, .footer small, .footer span { color: var(--brand-blue) !important; }
-              .footer a { color: var(--brand-blue) !important; }
-              .footer a:hover, .footer a:focus { color: #063e61 !important; opacity: 0.95; text-decoration: underline; }
-              .footer .terms-policy a { color: var(--brand-blue) !important; }
-              /* Social icons: solid Inspector Wiz blue via CSS mask */
-              .footer .social-icon { display: inline-block; width: 28px; height: 28px; background-color: var(--brand-blue) !important; }
+              /* Footer brand theme: brand blue background, dark navy text */
+              /* Stronger targeting: use #footer for higher specificity */
+              #footer, #footer * { box-sizing: border-box; color: #14395E !important; -webkit-text-fill-color: #14395E !important; opacity: 1 !important; text-shadow: none !important; filter: none !important; }
+              .footer { background: var(--brand-blue); border-top: 4px solid var(--brand-lime); }
+              #footer .links-wrapper, #footer .branding-wrapper { color: #14395E !important; }
+              #footer .widget-title,
+              #footer h1, #footer h2, #footer h3, #footer h4, #footer h5, #footer h6 { color: #14395E !important; }
+              #footer p, #footer li, #footer small, #footer span { color: #14395E !important; }
+              #footer a { color: #14395E !important; }
+              #footer a:hover, #footer a:focus { color: #14395E !important; opacity: 0.95; text-decoration: underline; }
+              #footer .terms-policy a { color: #14395E !important; }
+              /* Force link states and SVG fills to dark navy */
+              #footer a:link, #footer a:visited, #footer a:hover, #footer a:active { color: #14395E !important; }
+              #footer svg { fill: #14395E !important; color: #14395E !important; }
+              #footer li::marker { color: #14395E !important; }
+              /* Override common utility classes that may force light text */
+              #footer .text-light, #footer .text-white, #footer .text-secondary, #footer .text-muted,
+              #footer [class*="text-"] { color: #14395E !important; -webkit-text-fill-color:#14395E !important; }
+              /* Absolutely ensure all descendants render dark navy */
+              #footer *, #footer *::before, #footer *::after { color:#14395E !important; -webkit-text-fill-color:#14395E !important; opacity:1 !important; }
+              /* Social icons: solid dark navy via CSS mask on blue background */
+              .footer .social-icon { display: inline-block; width: 28px; height: 28px; background-color: #14395E !important; }
               .footer .social-icon { -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain; mask-repeat: no-repeat; mask-position: center; mask-size: contain; }
               .footer .social-icon.facebook { -webkit-mask-image: url('/wp-content/themes/resi-franchise/images/social/facebook.svg'); mask-image: url('/wp-content/themes/resi-franchise/images/social/facebook.svg'); }
               .footer .social-icon.instagram { -webkit-mask-image: url('/wp-content/themes/resi-franchise/images/social/instagram.svg'); mask-image: url('/wp-content/themes/resi-franchise/images/social/instagram.svg'); }
               .footer .social-icon.youtube { -webkit-mask-image: url('/wp-content/themes/resi-franchise/images/social/youtube.svg'); mask-image: url('/wp-content/themes/resi-franchise/images/social/youtube.svg'); }
               .footer .social-icon.linkedin { -webkit-mask-image: url('/wp-content/themes/resi-franchise/images/social/linkedin.svg'); mask-image: url('/wp-content/themes/resi-franchise/images/social/linkedin.svg'); }
               .footer .social-icons-wrapper a:hover .social-icon,
-              .footer .social-icons-wrapper a:focus .social-icon { background-color: #063e61 !important; }
+              .footer .social-icons-wrapper a:focus .social-icon { background-color: #1A4570 !important; }
             </style>
             <div class="container">
                 <div class="links-wrapper">
                     <div class="inner-link-wrapper">
                         <div id="nav_menu-3" class="widget widget_nav_menu">
-                            <h2 class="widget-title">Pressure Washing Services</h2>
-                            <nav class="menu-renovation-services-container" aria-label="Pressure Washing Services">
+                            <h2 class="widget-title" style="color:#14395E !important; -webkit-text-fill-color:#14395E !important;">Home Services</h2>
+                            <nav class="menu-renovation-services-container" aria-label="Home Services">
                                 <ul id="menu-renovation-services" class="menu">
                                     <li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a href="#">House &amp; Siding Washing</a></li>
                                     <li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a href="#">Roof Soft Wash</a></li>
@@ -38,27 +48,28 @@
                     </div>
                     <div class="inner-link-wrapper">
                         <div id="nav_menu-4" class="widget widget_nav_menu">
-                            <h2 class="widget-title">More Services</h2>
-                            <nav class="menu-garage-door-services-container" aria-label="More Services">
+                            <h2 class="widget-title" style="color:#14395E !important; -webkit-text-fill-color:#14395E !important;">Home Inspection &amp; Appraisals</h2>
+                            <nav class="menu-garage-door-services-container" aria-label="Home Inspection &amp; Appraisals">
                                 <ul id="menu-garage-door-services" class="menu">
-                                    <li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a href="#">Gutter Whitening</a></li>
-                                    <li class="menu-item menu-item-type-post_type menu-item-object-resi_service"><a href="#">Commercial Washing</a></li>
+                                    <li class="menu-item menu-item-type-post_type"><a href="/home-inspection">Home Inspection</a></li>
+                                    <li class="menu-item menu-item-type-post_type"><a href="/appraisals">Appraisals</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                     <div class="inner-link-wrapper">
                         <div id="nav_menu-5" class="widget widget_nav_menu">
-                            <h2 class="widget-title">Company</h2>
+                            <h2 class="widget-title" style="color:#14395E !important; -webkit-text-fill-color:#14395E !important;">Company</h2>
                             <nav class="menu-company-container" aria-label="Company">
                                 <ul id="menu-company" class="menu">
                                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/about-us">About Us</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/contact-us">Contact Us</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                     <div class="inner-link-wrapper">
-                        <h2>Follow Us</h2>
+                        <h2 style="color:#14395E !important; -webkit-text-fill-color:#14395E !important;">Follow Us</h2>
                         <div class="widget_nav_menu">
                             <ul>
                                 <li>
@@ -78,7 +89,7 @@
                                     </div>
                                 </li>
                                 <li><a href="#"></a></li>
-                                <li><p>Mon-Sat: <br>7:00 AM - 7:00 PM </p></li>
+                                <li><p style="color:#14395E !important; -webkit-text-fill-color:#14395E !important;">Mon-Sat: <br>7:00 AM - 7:00 PM </p></li>
                             </ul>
                         </div>
                     </div>
@@ -91,7 +102,7 @@
                             <li><a href="/privacy-policy/">Privacy Policy</a></li>
                         </ul>
                     </div>
-                    <p> 2025 Inspector Wiz. Ventured Brands All Rights Reserved.</p>
+                    <p>© 2025 Inspector Wiz. All Rights Reserved.</p>
                 </div>
             </div><!-- /.container -->
         </footer><!-- /#footer -->
