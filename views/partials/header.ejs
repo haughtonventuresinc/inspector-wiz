@@ -47,9 +47,10 @@
 			--brand-lime: #F6C52A !important; 
 			--brand-red: var(--brand-blue) !important; 
 			--brand-yellow: var(--brand-lime) !important; 
+			--brand-dark: #14395E !important; /* Brand dark blue for backgrounds */
 		}
 		/* Header banner and navbar */
-		.banner-wrapper { background-color: #14395E !important; }
+		.banner-wrapper { background-color: var(--brand-dark) !important; }
 		#header.navbar { background-color: var(--brand-blue) !important; border-bottom: 3px solid var(--brand-blue) !important; }
 		#header .nav-link { color: #14395E !important; }
 		#header .nav-link:hover { color: #14395E !important; text-decoration: underline; }
@@ -76,7 +77,7 @@
 	<meta name="msapplication-TileImage" content="/pictures/favicon/inspector-wiz/favicon-192x192.png" />
 	<style>
 		/* Global top banner styles */
-		.banner-wrapper { background-color: #14395E; }
+		.banner-wrapper { background-color: var(--brand-dark); }
 		.banner-wrapper .banner-header { 
 			margin: 0; 
 			text-align: center; 
@@ -93,6 +94,10 @@
 			display: inline-block; 
 			padding: 4px 10px;
 			border-radius: 6px;
+		}
+		.banner-wrapper .banner-header a:focus-visible {
+			outline: 2px solid var(--brand-blue);
+			outline-offset: 2px;
 		}
 		.banner-wrapper .banner-header a:hover { text-decoration: underline; filter: none; }
 		/* Header layout adjustments */
@@ -119,7 +124,7 @@
 		.btn.btn-brand-primary:hover { filter: brightness(1.05); box-shadow: 0 6px 16px rgba(11,94,142,.28); }
 
 		/* Site loader overlay */
-		#site-loader { position: fixed; inset: 0; background: var(--brand-yellow); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity .3s ease, visibility .3s ease; }
+		#site-loader { position: fixed; inset: 0; background: var(--brand-blue); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity .3s ease, visibility .3s ease; }
 		#site-loader img { width: 170px; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.15)); }
 		#site-loader.hidden { opacity: 0; visibility: hidden; }
 	</style>    

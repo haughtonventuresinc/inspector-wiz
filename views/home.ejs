@@ -1321,11 +1321,17 @@
           { title: 'Driveway & Concrete Cleaning', url: '/' },
           { title: 'Commercial Washing', url: '/' }
         ];
+        const serviceImages = [
+          '/pictures/Inspector-Wiz/1.png',
+          '/pictures/Inspector-Wiz/2.png',
+          '/pictures/Inspector-Wiz/3.png',
+          '/pictures/Inspector-Wiz/4.png'
+        ];
         for (let i = 1; i <= 4; i++) { 
       %>
         <% const sTitle = (homepage && homepage[`featuredService${i}Title`]) || _defaults[i-1].title; %>
         <% const sUrl = '/'; %>
-        <% const sImg = (homepage && homepage[`featuredService${i}Image`]) || ((i % 2 === 0) ? '/pictures/Inspector-Wiz/3.png' : '/pictures/Inspector-Wiz/2.png'); %>
+        <% const sImg = serviceImages[i-1] + '?v=2'; %>
         <a class="service-card-new" href="<%= sUrl %>">
           <div class="service-image">
             <img src="<%= sImg %>" alt="<%= sTitle %>" class="img-fluid">
@@ -1473,11 +1479,29 @@
 							    const pe = homepage && homepage[`blogFeat${i}Excerpt`];
 							    if (pt && pu && pi) posts.push({ title: pt, url: pu, image: pi, excerpt: pe || '' });
 							  }
+							  if (posts.length === 0) {
+							    posts.push(
+							      { title: "Buyer’s Inspection Checklist: What We Look For", url: "/blog/buyers-inspection-checklist", image: "/pictures/Inspector-Wiz/1.png", excerpt: "From roof to foundation—see the major systems we evaluate and how to prepare for an inspection." },
+							      { title: "Pre‑Listing Inspections: Sell With Confidence", url: "/blog/pre-listing-inspections", image: "/pictures/Inspector-Wiz/2.png", excerpt: "How a pre‑listing inspection reduces surprises, speeds closings, and builds buyer trust." },
+							      { title: "4‑Point vs Wind Mitigation: What’s the Difference?", url: "/blog/4-point-vs-wind-mitigation", image: "/pictures/Inspector-Wiz/3.png", excerpt: "Insurance forms explained—why your carrier requests them and what each report includes." }
+							    );
+							  }
+							  // Force card images order: 5, 4, 1
+							  (function(){
+							    try {
+							      var desired = [
+							        '/pictures/Inspector-Wiz/5.png',
+							        '/pictures/Inspector-Wiz/4.png',
+							        '/pictures/Inspector-Wiz/1.png'
+							      ];
+							      posts.forEach(function(p, idx){ p.image = desired[idx % desired.length]; });
+							    } catch(_) {}
+							  })();
 							%>
 							  <% posts.forEach(function(p){ %>
 							    <a href="<%= p.url %>" class="feat-post">
 							    	<article class="post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-							    		<div class="post-thumbnail"><img width="800" height="600" src="<%= p.image %>" class="attachment-post-thumbnail size-post-thumbnail" alt="" decoding="async" /></div>
+							    		<div class="post-thumbnail"><img width="800" height="600" src="<%= p.image %>?v=2" class="attachment-post-thumbnail size-post-thumbnail" alt="" decoding="async" /></div>
 							    		<div class="entry-summary"><h6 class="entry-title"><%= p.title %></h6><% if (p.excerpt) { %><p><%= p.excerpt %></p><% } %></div>
 							    	</article></a>
 							  <% }) %>
