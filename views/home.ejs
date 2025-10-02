@@ -108,7 +108,7 @@
   .hero-aesthetic .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(11, 94, 142, 0.45) 0%, rgba(11, 94, 142, 0.25) 40%, rgba(11, 94, 142, 0.45) 100%);
+    background: linear-gradient(180deg, rgba(84, 161, 218, 0.35) 0%, rgba(84, 161, 218, 0.20) 40%, rgba(84, 161, 218, 0.35) 100%);
     pointer-events: none;
   }
   
@@ -127,14 +127,14 @@
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     line-height: 1.1;
-    color: #fff;
+    color: var(--brand-blue);
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     margin-bottom: 1.5rem;
   }
   .hero-aesthetic .hero-description {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--brand-blue);
     max-width: 500px;
     margin-bottom: 2rem;
     margin-left: auto;
@@ -147,11 +147,11 @@
     flex-wrap: wrap;
     justify-content: center; /* center buttons under headline */
   }
-  .hero-aesthetic .btn-brand-primary { background-color: var(--brand-red) !important; border-color: var(--brand-red) !important; padding: 0.75rem 1.5rem; font-weight: 700; border-radius: 8px; transition: all 0.3s ease; color: #fff; box-shadow: 0 10px 24px rgba(11,94,142,.25); }
+  .hero-aesthetic .btn-brand-primary { background-color: var(--brand-red) !important; border-color: var(--brand-red) !important; padding: 0.75rem 1.5rem; font-weight: 700; border-radius: 8px; transition: all 0.3s ease; color: var(--brand-dark) !important; box-shadow: 0 10px 24px rgba(11,94,142,.25); }
   .hero-aesthetic .btn-brand-primary:hover {
     filter: brightness(1.05);
     transform: translateY(-2px);
-    color: #fff;
+    color: var(--brand-dark) !important;
   }
   .hero-aesthetic .btn-outline-light {
     padding: 0.75rem 1.5rem;
